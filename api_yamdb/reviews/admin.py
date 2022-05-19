@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Category, Genre, Title, User
-from .models import Review, Comment
 from api_yamdb.settings import EMPTY_VALUE_DISPLAY
+
+from .models import Category, Comment, Genre, Review, Title, User
 
 
 @admin.register(Category)

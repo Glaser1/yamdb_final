@@ -1,30 +1,27 @@
-from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
+from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.db.models import Avg
-from django.contrib.auth.tokens import default_token_generator
+from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import permissions, status, viewsets
+from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
-from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import viewsets
-from rest_framework import status
-from rest_framework import permissions
-from rest_framework.decorators import action
+from rest_framework_simplejwt.tokens import RefreshToken
+from reviews.models import Category, Genre, Review, Title, User
 
-from reviews.models import User, Category, Genre, Title
-from reviews.models import Review
-
-from .pagination import UsersPagination
-from .permissions import AdminUser, UserReadOnly
-from .permissions import IsAdminOrReadOnly, AuthorOrStaff
 from .filters import TitleFilter
 from .mixins import CustomMixin
-from .serializers import AuthSerializer, AuthTokenSerializer, UserSerializer
-from .serializers import (CategorySerializer, GenreSerializer,
-                          TitleCreateSerializer, TitleListSerializer)
-from .serializers import ReviewSerializer, CommentSerializer
+from .pagination import UsersPagination
+from .permissions import (AdminUser, AuthorOrStaff, IsAdminOrReadOnly,
+                          UserReadOnly)
+from .serializers import (AuthSerializer, AuthTokenSerializer,
+                          CategorySerializer, CommentSerializer,
+                          GenreSerializer, ReviewSerializer,
+                          TitleCreateSerializer, TitleListSerializer,
+                          UserSerializer)
 
 
 class AuthViewSet(viewsets.ModelViewSet):

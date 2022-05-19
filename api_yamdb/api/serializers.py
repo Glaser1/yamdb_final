@@ -1,11 +1,7 @@
-from rest_framework import serializers
 from django.shortcuts import get_object_or_404
-from rest_framework.validators import UniqueTogetherValidator
-from rest_framework.validators import UniqueValidator
-
-from reviews.models import Category, Genre, Title
-from reviews.models import User
-from reviews.models import Review, Comment
+from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
+from reviews.models import Category, Comment, Genre, Review, Title, User
 
 
 class GetTitle:
@@ -14,8 +10,7 @@ class GetTitle:
     def __call__(self, serializer_field):
         c_view = serializer_field.context['view']
         title_id = c_view.kwargs.get('title_id')
-        title = get_object_or_404(Title, id=title_id)
-        return title
+        return get_object_or_404(Title, id=title_id)
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -96,8 +91,10 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_role(self, value):
         role = self.context['request'].user.role
         if role == User.USER and role != value:
-            value = User.USER
-        return value
+            return User.USER
+        raise serializers.ValidationError(
+            'ValidationError!'
+        )
 
 
 class CategorySerializer(serializers.ModelSerializer):
