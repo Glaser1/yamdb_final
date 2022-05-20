@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
     env_file:
       - ./.env
   web:
-    build: glaser9/yamdb:v1 
+    image: glaser9/yamdb:v1 
     restart: always
     volumes:
       - static_value:/app/static/
